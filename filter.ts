@@ -1,19 +1,19 @@
 import { Course } from "./data";
 
-export function filter(nameArray: Array<string>, courseArray: Array<Course>): Array<Course> {
-    let ret: Array<Course> = [];
-    let courseArraySize: number = courseArray.length;
-    for (let i: number = 0; i < courseArraySize ; i++) {
+export function filter(
+    names: Array<string>,
+    courses: Map<string, Course>
+): Map<string, Course> {
+    let ret: Map<string, Course> = new Map();
+    for (const [courseName, course] of courses) {
         let flag: boolean = false;
-        let course: Course = courseArray[i];
-        let courseName: string = course.name;
 
-        let nameArraySize = nameArray.length;
+        let nameArraySize = names.length;
         for (let j: number = 0 ; j < nameArraySize && !flag ; j++) {
-            if (nameArray[j] == courseName) flag = true;
+            if (names[j] == courseName) flag = true;
         }
 
-        if (flag == true) ret.push(course);
+        if (flag == true) ret.set(courseName, course);
     }
 
     return ret;
