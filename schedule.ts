@@ -25,10 +25,17 @@ export function addScheduleElement(schedule: Schedule, element: ScheduleElement)
     let scheduleSize: number = schedule.length;
     let flag: boolean = false;
     for (let i: number = 0 ; i < scheduleSize ; i++) {
-        if ((ALL_DAYS.indexOf(schedule[i].day) > ALL_DAYS.indexOf(element.day) || compareTime(schedule[i].startTime, element.startTime)) && !flag) {
-            ret.push(element);
-            flag = true;
-        } // includes when there's a duplicate start time
+        if (!flag) {
+            if (ALL_DAYS.indexOf(schedule[i].day) > ALL_DAYS.indexOf(element.day)) {
+                ret.push(element);
+                flag = true;
+            } // includes when there's a duplicate start time
+            else if (ALL_DAYS.indexOf(schedule[i].day) === ALL_DAYS.indexOf(element.day) && compareTime(schedule[i].startTime, element.startTime)) {
+                ret.push(element);
+                flag = true;
+            }
+        }
+        
         ret.push(schedule[i]);
     }
     if (!flag) ret.push(element);

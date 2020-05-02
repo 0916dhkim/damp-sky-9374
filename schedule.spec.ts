@@ -57,6 +57,18 @@ describe("addScheduleElement", function() {
                 minute: 30
             }
         }
+        const fourth: ScheduleElement = {
+            name: "D",
+            day: "Tue",
+            startTime: {
+                hour: 12,
+                minute: 30
+            },
+            endTime: {
+                hour: 13,
+                minute: 30
+            }
+        }
         it("Prepend", function() {
             const schedule: Schedule = [second, third];
             const actual = addScheduleElement(schedule, first);
@@ -72,6 +84,11 @@ describe("addScheduleElement", function() {
             const actual = addScheduleElement(schedule, second);
             expect(actual).deep.equals([first, second, third]);
         });
+        it("How about different days with same time?", function() {
+            const schedule: Schedule = [first, third];
+            const actual = addScheduleElement(schedule, fourth);
+            expect(actual).deep.equals([first, third, fourth]);
+        })
     });
 });
 
@@ -117,6 +134,18 @@ describe("checkScheduleCollision", function() {
                 minute: 30
             }
         }
+        const fourth: ScheduleElement = {
+            name: "D",
+            day: "Tue",
+            startTime: {
+                hour: 12,
+                minute: 30
+            },
+            endTime: {
+                hour: 13,
+                minute: 30
+            }
+        }
         it("AB", function() {
             const actual = checkScheduleCollision([first, second]);
             expect(actual).to.be.true;
@@ -131,6 +160,10 @@ describe("checkScheduleCollision", function() {
         });
         it("ABC", function() {
             const actual = checkScheduleCollision([first, second, third]);
+            expect(actual).to.be.true;
+        });
+        it("ABCD", function() {
+            const actual = checkScheduleCollision([first, second, third, fourth]);
             expect(actual).to.be.true;
         });
     });
