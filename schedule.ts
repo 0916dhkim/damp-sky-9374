@@ -50,6 +50,7 @@ export function addScheduleElement(schedule: Schedule, element: ScheduleElement)
 export function checkScheduleCollision(schedule: Schedule): boolean {
     let scheduleSize: number = schedule.length;
     for (let i: number = 1; i < scheduleSize ; i++) {
+        // if adjacent schedule element has a same date and have comflicting time, return true as it has a schedule collision
         if (ALL_DAYS.indexOf(schedule[i - 1].day) === ALL_DAYS.indexOf(schedule[i].day) && compareTime(schedule[i - 1].endTime, schedule[i].startTime)) return true;
     }
     return false;
