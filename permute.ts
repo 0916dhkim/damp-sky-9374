@@ -12,15 +12,18 @@ export function permuteSchedule(courses: Map<string, Course>): Array<Schedule> {
 
     let permuteRecursively = (names: Array<string>, builder: Schedule): void => {
         // base case
-        if (names.length === 0) ret.push(builder);
+        if (names.length === 0) {
+            ret.push(builder);
+        }
         // recurse: if the list exist
         else {
-            let firstCourse = courses.get(names[0]);
+            const firstCourse = courses.get(names[0]);
             if (!firstCourse) {
                 throw "It is impossible for firstCourse to be null since the first if condition checks whether names is empty.";
             }
-            let element = firstCourse.options;
-            for (const option of element) {
+            const options = firstCourse.options;
+            for (const option of options) {
+                let builderAdded: Schedule = builder;
                 // adding all timeslots within the option
                 for (const slot of option) {
                     const block: ScheduleElement = {
@@ -29,13 +32,13 @@ export function permuteSchedule(courses: Map<string, Course>): Array<Schedule> {
                         startTime: slot.startTime,
                         endTime: slot.endTime
                     }
-                    addScheduleElement(builder, block);
+                    builderAdded = addScheduleElement(builderAdded, block);
                 }
                 // check if added blocks form a valid schedule
                 // if it is, recursively call the function
-                if (!checkScheduleCollision(builder)) {
-                    let newNames: Array<string> = names.slice(1, names.length);
-                    permuteRecursively(newNames, builder);
+                if (!checkScheduleCollision(builderAdded)) {
+                    const newNames: Array<string> = names.slice(1, names.length);
+                    permuteRecursively(newNames, builderAdded);
                 }
             }    
 

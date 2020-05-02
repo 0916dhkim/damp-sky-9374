@@ -167,4 +167,32 @@ describe("checkScheduleCollision", function() {
             expect(actual).to.be.true;
         });
     });
+    it("Adjacent Schedule Elements", function() {
+        const a: ScheduleElement = {
+            name: "A",
+            day: "Sun",
+            startTime: {
+                hour: 10,
+                minute: 0
+            },
+            endTime: {
+                hour: 13,
+                minute: 0
+            }
+        };
+        const b: ScheduleElement = {
+            name: "B",
+            day: "Sun",
+            startTime: {
+                hour: 9,
+                minute: 0
+            },
+            endTime: {
+                hour: 10,
+                minute: 0
+            }
+        };
+        const actual = checkScheduleCollision([b, a]);
+        expect(actual).to.be.false;
+    });
 });
