@@ -20,7 +20,7 @@ const baseConf = {
   resolve: {
     extensions: [".json", ".js", ".ts"]
   },
-  devtool: isDevelopment ? "eval-source-map" : false,
+  devtool: isDevelopment ? "source-map" : false,
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: process.env.NODE_ENV || "development",
