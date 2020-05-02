@@ -7,7 +7,8 @@
     "start": "node dist/server/server.js",
     "prestart": "npm run build",
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "pretest": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "chai": "^4.2.0",
     "express": "^4.17.1",
     "mocha": "^7.1.2",
+    "source-map-support": "^0.5.19",
     "ts-loader": "^7.0.2",
     "typescript": "^3.8.3",
     "webpack": "^4.43.0",
