@@ -4,6 +4,9 @@
   "description": "JSON Course Schedule Organizer",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/server/server.js",
+    "prestart": "npm run build",
+    "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,10 +20,17 @@
   },
   "homepage": "https://github.com/0916dhkim/damp-sky-9374#readme",
   "dependencies": {
+    "@types/chai": "^4.2.11",
     "@types/express": "^4.17.6",
     "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
     "express": "^4.17.1",
     "mocha": "^7.1.2",
-    "typescript": "^3.8.3"
+    "ts-loader": "^7.0.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }
