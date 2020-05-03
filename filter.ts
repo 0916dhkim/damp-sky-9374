@@ -5,15 +5,11 @@ export function filter(
     courses: Map<string, Course>
 ): Map<string, Course> {
     let ret: Map<string, Course> = new Map();
+    const nameSet = new Set(names);
     for (const [courseName, course] of courses) {
-        let flag: boolean = false;
-
-        let nameArraySize = names.length;
-        for (let j: number = 0 ; j < nameArraySize && !flag ; j++) {
-            if (names[j] == courseName) flag = true;
+        if (nameSet.has(courseName)) {
+            ret.set(courseName, course);
         }
-
-        if (flag == true) ret.set(courseName, course);
     }
 
     return ret;
