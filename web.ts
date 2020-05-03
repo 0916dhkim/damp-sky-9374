@@ -3,7 +3,7 @@ import { parseCourses } from "./parse";
 import { filter } from "./filter";
 import { ALL_DAYS, Schedule } from "./data";
 
-function createScheduleElement(schedule: Schedule, minHour: number, maxHour: number): HTMLElement {
+function createScheduleElement(schedule: Schedule, minHour: number, maxHour: number, courseLegend: Map<string, string>): HTMLElement {
     const ret = document.createElement("div");
     ret.className = "schedule-container"
 
@@ -45,14 +45,14 @@ function createScheduleElement(schedule: Schedule, minHour: number, maxHour: num
     }
 
     // Schedule elements.
-    for (const s of schedule) {
+    for (let i = 0; i < schedule.length; i++) {
+        const s = schedule[i];
         const scheduleElement = document.createElement("div");
-        scheduleElement.className = "schedule-element";
+        scheduleElement.className = ["schedule-element", courseLegend.get(s.name)].join(" ");
         scheduleElement.style.gridColumn = `${ALL_DAYS.indexOf(s.day) + 2} / span 1`;
         scheduleElement.style.gridRow = `${s.startTime.hour - minHour + 2} / span ${s.endTime.hour - s.startTime.hour}`;
         scheduleElement.style.marginTop = `${5 * s.startTime.minute / 60}em`;
         scheduleElement.style.marginBottom = `${-5 * s.endTime.minute / 60}em`;
-        scheduleElement.style.backgroundColor = "aqua";
         const scheduleLabel = document.createElement("b");
         scheduleLabel.className = "schedule-element-label";
         scheduleLabel.innerHTML = s.name;
@@ -90,9 +90,15 @@ function createScheduleElement(schedule: Schedule, minHour: number, maxHour: num
                 }
             }
         }
+        // Create course legend.
+        const courseLegend: Map<string, string> = new Map();
+        const desiredCoursesArray = Array.from(desiredCourses.values());
+        for (let i = 0; i < desiredCoursesArray.length; i++) {
+            courseLegend.set(desiredCoursesArray[i].name, `course-${(i % 8) + 1}`);
+        }
         // Create HTML elements.
         for (const schedule of possibleSchedules) {
-            const scheduleElement = createScheduleElement(schedule, minHour, maxHour);
+            const scheduleElement = createScheduleElement(schedule, minHour, maxHour, courseLegend);
             main.appendChild(scheduleElement);
         }
     }

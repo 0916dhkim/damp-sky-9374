@@ -84,3 +84,28 @@
     align-items: center;
     justify-content: center;
 }
+
+.course-1 {
+    background-color: aqua;
+}
+.course-2 {
+    background-color: blue;
+}
+.course-3 {
+    background-color: blueviolet;
+}
+.course-4 {
+    background-color: brown;
+}
+.course-5 {
+    background-color: coral;
+}
+.course-6 {
+    background-color: darkorange;
+}
+.course-7 {
+    background-color: gold;
+}
+.course-8 {
+    background-color: greenyellow;
+}
