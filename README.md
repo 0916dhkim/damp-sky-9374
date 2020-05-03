@@ -83,7 +83,8 @@ Example json file:
                 }
             ]
         ]
-    },
+    }
+]
 ```
 
 Second, a semicolon-separated list of desired courses to take.
