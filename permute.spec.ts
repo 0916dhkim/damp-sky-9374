@@ -20,7 +20,7 @@ describe("permuteSchedule", function() {
     it("Zero Courses", function() {
         const courses: Map<string, Course> = new Map();
         const actual = permuteSchedule(courses);
-        expect(actual).deep.equals([]);
+        expect(actual).deep.equals([[]]);
     });
     it("Realistic", function() {
         const AOption1Slot1: Slot = {

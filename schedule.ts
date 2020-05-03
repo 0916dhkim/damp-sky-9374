@@ -2,15 +2,14 @@ import { Schedule, ScheduleElement, Time, ALL_DAYS } from "./data";
 /**
  * @param a 
  * @param b 
- * @returns true when a is chronologically later than b
+ * @returns positive number when a is later than b, 0 when a is equal to b, negative number when a is earlier than b
  */
-function compareTime(a: Time, b: Time): boolean {
-    if (a.hour > b.hour) return true;
-    else if (a.hour < b.hour) return false;
-    else {
-        if (a.minute >= b.minute) return true;
+function compareTime(a: Time, b: Time): number {
+    if (a.hour === b.hour) {
+        return a.minute - b.minute;
+    } else {
+        return a.hour - b.hour;
     }
-    return false; // implicit condition of when a.minute <= b.minute even if a and b are same time
 }
 
 /**
@@ -30,7 +29,7 @@ export function addScheduleElement(schedule: Schedule, element: ScheduleElement)
                 ret.push(element);
                 flag = true;
             } // includes when there's a duplicate start time
-            else if (ALL_DAYS.indexOf(schedule[i].day) === ALL_DAYS.indexOf(element.day) && compareTime(schedule[i].startTime, element.startTime)) {
+            else if (ALL_DAYS.indexOf(schedule[i].day) === ALL_DAYS.indexOf(element.day) && compareTime(schedule[i].startTime, element.startTime) > 0) {
                 ret.push(element);
                 flag = true;
             }
@@ -48,10 +47,15 @@ export function addScheduleElement(schedule: Schedule, element: ScheduleElement)
  * @returns True if collides.
  */
 export function checkScheduleCollision(schedule: Schedule): boolean {
-    let scheduleSize: number = schedule.length;
-    for (let i: number = 1; i < scheduleSize ; i++) {
+    const scheduleSize: number = schedule.length;
+    let flag: boolean = false;
+    for (let i: number = 0; i < scheduleSize - 1 ; i++) {
         // if adjacent schedule element has a same date and have comflicting time, return true as it has a schedule collision
-        if (ALL_DAYS.indexOf(schedule[i - 1].day) === ALL_DAYS.indexOf(schedule[i].day) && compareTime(schedule[i - 1].endTime, schedule[i].startTime)) return true;
+        if (ALL_DAYS.indexOf(schedule[i].day) === ALL_DAYS.indexOf(schedule[i + 1].day) && !flag) {
+            if (compareTime(schedule[i].endTime, schedule[i + 1].startTime) > 0 && !flag) {
+                flag = true;
+            }
+        }
     }
-    return false;
+    return flag;
 }
